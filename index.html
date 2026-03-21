@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Augmented Democracies — IJCAI-ECAI 2026 Workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+```
+:root {
+  --ink: #0f0e0c;
+  --paper: #f5f0e8;
+  --cream: #ede8dc;
+  --accent: #c8402a;
+  --gold: #b8922a;
+  --muted: #6b6558;
+  --rule: rgba(15,14,12,0.12);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+header {
+  position: relative;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0;
+  overflow: hidden;
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+.header-left {
+  padding: 4rem 3rem 4rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(245,240,232,0.12);
+  position: relative;
+  z-index: 2;
+}
+
+.header-right {
+  position: relative;
+  background: #161410;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.header-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,64,42,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 30% 70%, rgba(184,146,42,0.10) 0%, transparent 60%);
+}
+
+.globe-svg {
+  width: 340px;
+  height: 340px;
+  opacity: 0.55;
+  animation: rotateGlobe 40s linear infinite;
+}
+
+@keyframes rotateGlobe {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.4rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 1.5rem 0 1rem;
+  color: var(--paper);
+}
+
+.header-title em {
+  font-style: italic;
+  color: #e8b090;
+}
+
+.header-sub {
+  font-size: 1rem;
+  color: rgba(245,240,232,0.65);
+  font-weight: 300;
+  max-width: 36ch;
+  line-height: 1.7;
+}
+
+.meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid rgba(245,240,232,0.2);
+  border-radius: 2px;
+  color: rgba(245,240,232,0.8);
+}
+
+.pill.accent-pill {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.header-bottom {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cta-btn:hover { background: #a8331f; }
+
+.cta-link {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.5);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  border-bottom: 1px solid rgba(245,240,232,0.1);
+  padding: 0 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 52px;
+}
+
+.nav-brand {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--paper); }
+
+/* ── SECTIONS ── */
+section {
+  padding: 6rem 4rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.section-label::after {
+  content: '';
+  flex: 0 0 40px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+
+.prose {
+  max-width: 68ch;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #2a2820;
+}
+
+/* ── ABOUT ── */
+#about .about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+.trilemma-box {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2.5rem;
+  position: relative;
+}
+
+.trilemma-box::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 8rem;
+  color: var(--accent);
+  opacity: 0.2;
+  position: absolute;
+  top: -1rem;
+  left: 1.5rem;
+  line-height: 1;
+}
+
+.trilemma-box p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  font-style: italic;
+  color: rgba(245,240,232,0.85);
+  position: relative;
+  z-index: 1;
+}
+
+.trilemma-points {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.trilemma-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.tp-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.tp-text {
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.75);
+}
+
+.tp-text strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+/* ── TRACKS ── */
+#tracks { background: var(--cream); }
+
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5px;
+  margin-top: 3rem;
+  background: var(--rule);
+}
+
+.track-card {
+  background: var(--paper);
+  padding: 2.5rem;
+  position: relative;
+  transition: background 0.2s;
+}
+.track-card:hover { background: #f0ebe0; }
+
+.track-letter {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.06;
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+}
+
+.track-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+
+.track-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.track-topics {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.track-topics li {
+  font-size: 0.88rem;
+  color: var(--muted);
+  padding-left: 1.2rem;
+  position: relative;
+}
+.track-topics li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  opacity: 0.5;
+}
+
+/* ── SCHEDULE ── */
+#schedule .schedule-col {
+  max-width: 800px;
+}
+
+.day-block {
+  margin-top: 3rem;
+}
+
+.day-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.schedule-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1.5rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+
+.sched-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  padding-top: 0.1rem;
+}
+
+.sched-content {}
+
+.sched-title {
+  font-weight: 500;
+  font-size: 0.97rem;
+  margin-bottom: 0.2rem;
+}
+
+.sched-detail {
+  font-size: 0.83rem;
+  color: var(--muted);
+}
+
+.sched-type {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  margin-bottom: 0.4rem;
+  border-radius: 1px;
+}
+
+.type-talk { background: rgba(200,64,42,0.12); color: var(--accent); }
+.type-break { background: rgba(107,101,88,0.1); color: var(--muted); }
+.type-session { background: rgba(184,146,42,0.15); color: var(--gold); }
+.type-panel { background: rgba(15,14,12,0.07); color: var(--ink); }
+
+/* ── PEOPLE ── */
+#people { background: var(--ink); color: var(--paper); }
+#people .section-label { color: #e8a090; }
+#people .section-title { color: var(--paper); }
+
+.people-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.35);
+  margin: 3rem 0 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(245,240,232,0.08);
+}
+
+.organizers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(245,240,232,0.08);
+  margin-bottom: 1px;
+}
+
+.committee-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(245,240,232,0.08);
+}
+
+.person-card {
+  background: var(--ink);
+  padding: 1.8rem;
+  transition: background 0.2s;
+}
+.person-card:hover { background: #1a1815; }
+
+.person-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: var(--paper);
+}
+
+.person-title {
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.5);
+  line-height: 1.4;
+}
+
+.person-affil {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: rgba(200,64,42,0.8);
+  margin-top: 0.5rem;
+}
+
+/* ── SUBMISSIONS ── */
+#submissions .sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 2rem;
+}
+
+.sub-types {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.sub-type {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  padding: 1.2rem;
+  border: 1px solid var(--rule);
+  background: var(--cream);
+}
+
+.sub-icon {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.sub-info h4 {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.sub-info p {
+  font-size: 0.83rem;
+  color: var(--muted);
+}
+
+.timeline {
+  margin-top: 1rem;
+}
+
+.tl-item {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+
+.tl-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.tl-event {
+  font-size: 0.9rem;
+}
+
+.tl-item.highlight .tl-date { color: var(--accent); }
+.tl-item.highlight .tl-event { font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  background: #0a0908;
+  color: rgba(245,240,232,0.4);
+  padding: 3rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(245,240,232,0.7);
+}
+
+.footer-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-align: right;
+  line-height: 2;
+}
+
+/* ── DECORATIVE RULE ── */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0;
+}
+.ornament::before, .ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+.ornament span {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--accent);
+  opacity: 0.4;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .header-grid { grid-template-columns: 1fr; }
+  .header-right { display: none; }
+  nav { padding: 0 1.5rem; }
+  .nav-links { gap: 1rem; }
+  section { padding: 4rem 1.5rem; }
+  #about .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .tracks-grid { grid-template-columns: 1fr; }
+  .organizers-grid, .committee-grid { grid-template-columns: 1fr 1fr; }
+  #submissions .sub-grid { grid-template-columns: 1fr; gap: 2rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  .footer-meta { text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .header-left { padding: 2.5rem 1.5rem; }
+  .organizers-grid, .committee-grid { grid-template-columns: 1fr; }
+  .schedule-item { grid-template-columns: 80px 1fr; gap: 1rem; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim-1 { animation: fadeUp 0.7s ease both; }
+.anim-2 { animation: fadeUp 0.7s 0.15s ease both; }
+.anim-3 { animation: fadeUp 0.7s 0.3s ease both; }
+.anim-4 { animation: fadeUp 0.7s 0.45s ease both; }
+.anim-5 { animation: fadeUp 0.7s 0.6s ease both; }
+```
+
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+
+<header>
+  <div class="header-grid">
+    <div class="header-left">
+      <div>
+        <div class="eyebrow anim-1">IJCAI-ECAI 2026 Workshop · Bremen, Germany · 17 August 2026</div>
+        <h1 class="header-title anim-2">
+          Augmented<br><em>Democracies</em>
+        </h1>
+        <p class="header-sub anim-3">
+          AI for Civic Engagement and Democratic Decision-Making — a full-day workshop bringing together researchers from AI, HCI, political science, and digital democracy practice.
+        </p>
+        <div class="meta-pills anim-4">
+          <span class="pill accent-pill">Full-Day Workshop</span>
+          <span class="pill">40–50 Participants</span>
+          <span class="pill">4 Tracks</span>
+          <span class="pill">Bremen, Germany</span>
+        </div>
+      </div>
+      <div class="header-bottom anim-5">
+        <button class="cta-btn" onclick="document.getElementById('submissions').scrollIntoView({behavior:'smooth'})">Submit a Paper</button>
+        <a href="#schedule" class="cta-link">View Schedule →</a>
+      </div>
+    </div>
+    <div class="header-right">
+      <!-- Decorative globe SVG -->
+      <svg class="globe-svg" viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="170" cy="170" r="140" stroke="rgba(245,240,232,0.15)" stroke-width="1"/>
+        <circle cx="170" cy="170" r="100" stroke="rgba(245,240,232,0.10)" stroke-width="1"/>
+        <circle cx="170" cy="170" r="60" stroke="rgba(245,240,232,0.08)" stroke-width="1"/>
+        <!-- Meridians -->
+        <ellipse cx="170" cy="170" rx="70" ry="140" stroke="rgba(245,240,232,0.10)" stroke-width="1"/>
+        <ellipse cx="170" cy="170" rx="120" ry="140" stroke="rgba(245,240,232,0.08)" stroke-width="1"/>
+        <ellipse cx="170" cy="170" rx="20" ry="140" stroke="rgba(245,240,232,0.07)" stroke-width="1"/>
+        <!-- Parallels -->
+        <ellipse cx="170" cy="120" rx="115" ry="25" stroke="rgba(245,240,232,0.09)" stroke-width="1"/>
+        <ellipse cx="170" cy="170" rx="140" ry="28" stroke="rgba(245,240,232,0.12)" stroke-width="1"/>
+        <ellipse cx="170" cy="220" rx="115" ry="25" stroke="rgba(245,240,232,0.09)" stroke-width="1"/>
+        <!-- Dot nodes -->
+        <circle cx="170" cy="30"  r="3.5" fill="rgba(200,64,42,0.7)"/>
+        <circle cx="240" cy="90"  r="2.5" fill="rgba(200,64,42,0.5)"/>
+        <circle cx="280" cy="170" r="3"   fill="rgba(184,146,42,0.6)"/>
+        <circle cx="100" cy="130" r="2.5" fill="rgba(200,64,42,0.4)"/>
+        <circle cx="60"  cy="200" r="2"   fill="rgba(184,146,42,0.4)"/>
+        <circle cx="170" cy="310" r="3.5" fill="rgba(184,146,42,0.5)"/>
+        <circle cx="220" cy="260" r="2"   fill="rgba(200,64,42,0.4)"/>
+        <!-- Connection lines -->
+        <line x1="170" y1="30"  x2="240" y2="90"  stroke="rgba(200,64,42,0.25)" stroke-width="0.8"/>
+        <line x1="240" y1="90"  x2="280" y2="170" stroke="rgba(200,64,42,0.2)"  stroke-width="0.8"/>
+        <line x1="100" y1="130" x2="240" y2="90"  stroke="rgba(200,64,42,0.18)" stroke-width="0.8"/>
+        <line x1="60"  y1="200" x2="100" y2="130" stroke="rgba(184,146,42,0.2)" stroke-width="0.8"/>
+        <line x1="170" y1="310" x2="220" y2="260" stroke="rgba(184,146,42,0.2)" stroke-width="0.8"/>
+        <line x1="280" y1="170" x2="220" y2="260" stroke="rgba(200,64,42,0.2)"  stroke-width="0.8"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ── NAV ── -->
+
+<nav>
+  <span class="nav-brand">Augmented Democracies · IJCAI-ECAI 2026</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#people">Organizers</a></li>
+    <li><a href="#submissions">Submit</a></li>
+  </ul>
+</nav>
+
+<!-- ── ABOUT ── -->
+
+<section id="about">
+  <div class="section-label">About the Workshop</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Designing AI for Democracy</h2>
+      <div class="prose">
+        <p>Democratic political regimes face unprecedented challenges from declining public trust, polarization, disinformation, and external competition from authoritarian systems deploying AI for centralized control.</p>
+        <p style="margin-top:1.2rem;">Simultaneously, recent advances in artificial intelligence — especially large language models — have created new technical capabilities to support democratic deliberation, civic engagement, and inclusive political participation at scale.</p>
+        <p style="margin-top:1.2rem;">This workshop brings together researchers from AI, HCI, political science, computational social science, and digital democracy practice to critically assess the state of the art and collaboratively design next-generation AI systems that strengthen democratic decision-making by the people and for the people.</p>
+      </div>
+    </div>
+    <div class="trilemma-box">
+      <p>A core challenge in democratic theory is the <strong>deliberative trilemma</strong>: achieving simultaneously broad participation, high-quality deliberation, and political equality is extremely difficult.</p>
+      <div class="trilemma-points">
+        <div class="trilemma-point">
+          <span class="tp-num">01</span>
+          <span class="tp-text"><strong>Scalability</strong> — Broad participation across diverse populations</span>
+        </div>
+        <div class="trilemma-point">
+          <span class="tp-num">02</span>
+          <span class="tp-text"><strong>Deliberation Quality</strong> — Reasoned, informed exchange of arguments</span>
+        </div>
+        <div class="trilemma-point">
+          <span class="tp-num">03</span>
+          <span class="tp-text"><strong>Political Equality</strong> — Equal voice and influence for all participants</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRACKS ── -->
+
+<section id="tracks">
+  <div class="section-label">Call for Contributions</div>
+  <h2 class="section-title">Four Research Tracks</h2>
+  <p class="prose">We invite short papers (4–6 pages), extended abstracts (2–3 pages), position papers, and system demonstrations on the following topics.</p>
+
+  <div class="tracks-grid" style="margin-top:2.5rem;">
+    <div class="track-card">
+      <div class="track-letter">A</div>
+      <div class="track-tag">Track A</div>
+      <h3 class="track-title">AI-Mediated Deliberation &amp; Consensus Formation</h3>
+      <ul class="track-topics">
+        <li>AI-mediated deliberation and consensus or meta-consensus formation</li>
+        <li>LLM-based facilitation, summarization, and argument coaching</li>
+        <li>Large-scale deliberation platforms and clustering approaches</li>
+        <li>Evaluation metrics for deliberative quality, equality, and legitimacy</li>
+      </ul>
+    </div>
+    <div class="track-card">
+      <div class="track-letter">B</div>
+      <div class="track-tag">Track B</div>
+      <h3 class="track-title">AI for Representation &amp; Inclusion</h3>
+      <ul class="track-topics">
+        <li>Multilingual and cross-cultural deliberation in European and global settings</li>
+        <li>AI solutions for underrepresented groups (migrants, asylum seekers, lower-educated populations)</li>
+        <li>Accessibility tools for time-constrained citizens and literacy barriers</li>
+        <li>Minority protection and contestability mechanisms</li>
+      </ul>
+    </div>
+    <div class="track-card">
+      <div class="track-letter">C</div>
+      <div class="track-tag">Track C</div>
+      <h3 class="track-title">Real-World Deliberation Platforms &amp; Deployment</h3>
+      <ul class="track-topics">
+        <li>Institutional deployment in citizens' assemblies and participatory budgeting</li>
+        <li>Case studies from Decidim, Consul, and similar civic tech tools</li>
+        <li>Integration with existing democratic institutions and governance structures</li>
+        <li>Lessons learned from practical implementations</li>
+      </ul>
+    </div>
+    <div class="track-card">
+      <div class="track-letter">D</div>
+      <div class="track-tag">Track D</div>
+      <h3 class="track-title">Democratic AI Governance &amp; Alignment</h3>
+      <ul class="track-topics">
+        <li>Democracy-by-design and participatory AI alignment</li>
+        <li>Collective Constitutional AI and public input into AI development</li>
+        <li>Civic education and AI literacy for democratic participation</li>
+        <li>Trust, legitimacy, and transparency in AI-augmented democratic processes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ornament"><span>✦</span></div>
+  <p class="prose"><strong>Cross-cutting concerns:</strong> Risks including manipulation, strategic behavior, misinformation, trust erosion, and the "AI penalty" in civic contexts; political behavior and polarization; evaluation frameworks and empirical validation; ethical considerations and value alignment.</p>
+</section>
+
+<!-- ── SCHEDULE ── -->
+
+<section id="schedule">
+  <div class="section-label">Programme</div>
+  <h2 class="section-title">Workshop Schedule</h2>
+  <p class="prose">17 August 2026, Bremen, Germany &mdash; Full-day workshop.</p>
+
+  <div class="schedule-col">
+    <div class="day-block">
+      <div class="day-label">Morning Session — Problem Framing and State of the Art</div>
+
+```
+  <div class="schedule-item">
+    <div class="sched-time">09:00–09:15</div>
+    <div class="sched-content">
+      <div class="sched-type type-session">Opening</div>
+      <div class="sched-title">Opening Remarks and Workshop Framing</div>
+      <div class="sched-detail">Introduction to the deliberative trilemma · Overview of objectives and structure</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">09:15–09:45</div>
+    <div class="sched-content">
+      <div class="sched-type type-talk">Invited Talk</div>
+      <div class="sched-title">AI Mediation in Democratic Deliberation</div>
+      <div class="sched-detail">Michael H. Tessler · Google DeepMind, London · AI-mediated synthesis and common ground formation</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">09:45–10:15</div>
+    <div class="sched-content">
+      <div class="sched-type type-talk">Invited Talk</div>
+      <div class="sched-title">Participatory AI Alignment</div>
+      <div class="sched-detail">Davide Grossi · University of Groningen · Collective Constitutional AI and democracy-by-design</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">10:15–10:45</div>
+    <div class="sched-content">
+      <div class="sched-type type-talk">Invited Talk</div>
+      <div class="sched-title">Hybrid AI to Support Democratic Debate</div>
+      <div class="sched-detail">Monica Palmirani · Full Professor of Legal Informatics · University of Bologna · Hybrid AI approaches for structuring and enriching democratic deliberation</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">10:45–11:15</div>
+    <div class="sched-content">
+      <div class="sched-type type-break">Break</div>
+      <div class="sched-title">Coffee Break</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">11:15–11:45</div>
+    <div class="sched-content">
+      <div class="sched-type type-talk">Invited Talk</div>
+      <div class="sched-title">Deliberation Quality and Platform Design</div>
+      <div class="sched-detail">Horacio Saggion · University Pompeu Fabra · Measuring and ensuring deliberative quality in online platforms</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">11:45–12:15</div>
+    <div class="sched-content">
+      <div class="sched-type type-session">Lightning Talks</div>
+      <div class="sched-title">State of the Art: Paper Presentations</div>
+      <div class="sched-detail">5-minute presentations of accepted papers and demos · Existing systems, empirical findings, and current challenges</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">12:15–13:30</div>
+    <div class="sched-content">
+      <div class="sched-type type-break">Break</div>
+      <div class="sched-title">Lunch Break</div>
+      <div class="sched-detail">Poster session and demo stations during the break</div>
+    </div>
+  </div>
+</div>
+
+<div class="day-block">
+  <div class="day-label">Afternoon Session — Co-Design and Synthesis</div>
+
+  <div class="schedule-item">
+    <div class="sched-time">13:30–15:00</div>
+    <div class="sched-content">
+      <div class="sched-type type-session">Breakout Studios</div>
+      <div class="sched-title">Parallel Design Studios (90 min)</div>
+      <div class="sched-detail">
+        <strong>Studio A</strong> · Consensus &amp; Minority Protection<br>
+        <strong>Studio B</strong> · Deliberation Quality &amp; Truthfulness<br>
+        <strong>Studio C</strong> · Inclusion &amp; Multilingual Participation<br>
+        <strong>Studio D</strong> · Democracy-by-Design &amp; AI Alignment
+      </div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">15:00–15:30</div>
+    <div class="sched-content">
+      <div class="sched-type type-break">Break</div>
+      <div class="sched-title">Coffee Break</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">15:30–16:30</div>
+    <div class="sched-content">
+      <div class="sched-type type-session">Plenary</div>
+      <div class="sched-title">Report-Back and Synthesis</div>
+      <div class="sched-detail">10-minute presentations from each studio · Identification of cross-cutting themes · Consolidation of design principles</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">16:30–17:15</div>
+    <div class="sched-content">
+      <div class="sched-type type-panel">Panel</div>
+      <div class="sched-title">From Research to Impact</div>
+      <div class="sched-detail">Moderator: Hilke Brockmann · Real-world deployment · Institutional adoption · Policy implications</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">17:15–17:45</div>
+    <div class="sched-content">
+      <div class="sched-type type-session">Networking</div>
+      <div class="sched-title">Consortium Formation</div>
+      <div class="sched-detail">Future collaborations · EU/national funding opportunities · Working group sign-ups</div>
+    </div>
+  </div>
+
+  <div class="schedule-item">
+    <div class="sched-time">17:45–18:00</div>
+    <div class="sched-content">
+      <div class="sched-type type-session">Closing</div>
+      <div class="sched-title">Closing Remarks and Next Steps</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ── PEOPLE ── -->
+
+<section id="people">
+  <div class="section-label">People</div>
+  <h2 class="section-title">Organizers &amp; Committee</h2>
+
+  <div class="people-section-title">Organizing Committee</div>
+  <div class="organizers-grid">
+    <div class="person-card">
+      <div class="person-name">Hilke Brockmann</div>
+      <div class="person-title">Professor of Sociology<br>Primary Contact</div>
+      <div class="person-affil">Constructor University Bremen, Germany</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Horacio Saggion</div>
+      <div class="person-title">Professor of Computer Science &amp; AI<br>Head of TALN Group</div>
+      <div class="person-affil">University Pompeu Fabra, Spain</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Ivan Yamshchikov</div>
+      <div class="person-title">Research Professor<br>Semantic Data Processing &amp; Cognitive Computing</div>
+      <div class="person-affil">THWS Würzburg-Schweinfurt, Germany</div>
+    </div>
+  </div>
+
+  <div class="people-section-title" style="margin-top:2.5rem;">Scientific Committee</div>
+  <div class="committee-grid">
+    <div class="person-card">
+      <div class="person-name">Angelica Henestrosa</div>
+      <div class="person-title">Post-Doc, Psychology &amp; HCI</div>
+      <div class="person-affil">THWS, Germany</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Felix Gaisbauer</div>
+      <div class="person-title">Postdoctoral Researcher</div>
+      <div class="person-affil">Weizenbaum Institute, Berlin</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Davide Grossi</div>
+      <div class="person-title">Associate Professor<br>Collective Decision Making &amp; Computation</div>
+      <div class="person-affil">University of Groningen, Netherlands</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Jan Lorenz</div>
+      <div class="person-title">Assistant Professor<br>Social Data Science</div>
+      <div class="person-affil">Constructor University Bremen, Germany</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Jos van Leeuwen</div>
+      <div class="person-title">Professor of Civic Technology</div>
+      <div class="person-affil">The Hague University of Applied Sciences, Netherlands</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">David S. Rosenblum</div>
+      <div class="person-title">Professor of Computer Science</div>
+      <div class="person-affil">George Mason University, USA</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Jakob Suchan</div>
+      <div class="person-title">Assistant Professor of Computer Science</div>
+      <div class="person-affil">Constructor University Bremen, Germany</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Kalypso Nicolaïdis</div>
+      <div class="person-title">Professor of Global Affairs</div>
+      <div class="person-affil">School of Transnational Governance, EUI, Italy</div>
+    </div>
+    <div class="person-card">
+      <div class="person-name">Monica Palmirani</div>
+      <div class="person-title">Professor of Legal Informatics &amp; ICT Law</div>
+      <div class="person-affil">University of Bologna, Italy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUBMISSIONS ── -->
+
+<section id="submissions">
+  <div class="section-label">Submissions</div>
+  <h2 class="section-title">How to Contribute</h2>
+
+  <div class="sub-grid">
+    <div>
+      <p class="prose">We welcome contributions from researchers and practitioners across AI, computational social science, political science, HCI, civic technology, and related fields.</p>
+
+```
+  <div class="sub-types">
+    <div class="sub-type">
+      <div class="sub-icon">07</div>
+      <div class="sub-info">
+        <h4>Long Papers</h4>
+        <p>Up to 7 pages plus references · Original research, empirical findings, or system descriptions</p>
+      </div>
+    </div>
+    <div class="sub-type">
+      <div class="sub-icon">02</div>
+      <div class="sub-info">
+        <h4>Extended Abstracts</h4>
+        <p>Up to 2 pages plus references · Work in progress, position statements, or preliminary results</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.8rem; padding:1.4rem 1.5rem; background:var(--ink); color:var(--paper);">
+    <div style="font-family:'DM Mono',monospace; font-size:0.63rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:0.6rem;">Format</div>
+    <p style="font-size:0.88rem; line-height:1.7; color:rgba(245,240,232,0.75);">All submissions must use the <strong style="color:var(--paper);">IJCAI-ECAI 2026 conference paper template</strong>. Page limits are exclusive of references. Submissions should be made in PDF format.</p>
+  </div>
+</div>
+
+<div>
+  <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; margin-bottom:1.5rem;">Important Dates</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">15 Mar 2026</div>
+      <div class="tl-event">Call for papers issued</div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-date">1 Jun 2026</div>
+      <div class="tl-event">Paper submission deadline</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">25 Jun 2026</div>
+      <div class="tl-event">Notification to authors</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">10 Jul 2026</div>
+      <div class="tl-event">Camera-ready deadline</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">15 Jul 2026</div>
+      <div class="tl-event">Preliminary programme published</div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-date">17 Aug 2026</div>
+      <div class="tl-event">Workshop at IJCAI-ECAI 2026, Bremen</div>
+    </div>
+  </div>
+
+  <div style="margin-top:2.5rem; padding:1.5rem; background:var(--cream); border-left:3px solid var(--accent);">
+    <p style="font-size:0.88rem; line-height:1.7; color:var(--muted);">
+      Submissions will be reviewed by the programme committee. Accepted papers will be presented at the workshop. Authors of accepted papers must register for IJCAI-ECAI 2026.
+    </p>
+    <p style="font-size:0.88rem; margin-top:0.8rem; color:var(--muted);">
+      For inquiries, contact: <a href="/cdn-cgi/l/email-protection#b4dcd6c6dbd7dfd9d5dadaf4d7dbdac7c0c6c1d7c0dbc69ac1daddc2d1c6c7ddc0cd" style="color:var(--accent);"><span class="__cf_email__" data-cfemail="5d353f2f323e36303c33331d3e32332e292f283e29322f732833342b382f2e342924">[email&#160;protected]</span></a>
+    </p>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+
+<footer>
+  <div>
+    <div class="footer-brand">Augmented Democracies</div>
+    <div style="font-size:0.78rem; margin-top:0.4rem; color:rgba(245,240,232,0.3);">IJCAI-ECAI 2026 Workshop · 17 August 2026 · Bremen, Germany</div>
+  </div>
+  <div class="footer-meta">
+    Organized by Constructor University Bremen<br>
+    University Pompeu Fabra · T

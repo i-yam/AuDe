@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Augmented Democracies &mdash; IJCAI-ECAI 2026 Workshop</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; font-size: 17px; line-height: 1.7; color: #1a1a1a; background: #ffffff; }
+a { color: #8b1a1a; }
+a:hover { color: #c0392b; }
+#topnav { background: #1a1a1a; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 48px; position: sticky; top: 0; z-index: 100; }
+#topnav .brand { color: #ccc; font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+#topnav ul { list-style: none; display: flex; gap: 1.5rem; }
+#topnav ul a { color: #aaa; font-family: Arial, sans-serif; font-size: 0.75rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; }
+#topnav ul a:hover { color: #fff; }
+#hero { background: #1a1a1a; color: #f0ebe0; padding: 5rem 4rem 4rem; border-bottom: 3px solid #8b1a1a; }
+#hero .label { font-family: Arial, sans-serif; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: #c0392b; margin-bottom: 1.2rem; }
+#hero h1 { font-size: 3.2rem; font-weight: normal; line-height: 1.1; margin-bottom: 1.5rem; }
+#hero h1 em { font-style: italic; color: #e8a080; }
+#hero p { font-size: 1.05rem; color: #bbb; max-width: 55ch; margin-bottom: 2rem; line-height: 1.7; }
+#hero .meta { font-family: Arial, sans-serif; font-size: 0.82rem; color: #888; margin-bottom: 2.5rem; }
+#hero .meta span { margin-right: 1.5rem; }
+#hero button { background: #8b1a1a; color: #fff; border: none; padding: 0.75rem 2rem; font-family: Arial, sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+#hero button:hover { background: #a52020; }
+#hero .scroll-link { margin-left: 1.5rem; color: #888; font-family: Arial, sans-serif; font-size: 0.85rem; text-decoration: underline; cursor: pointer; }
+section { padding: 4rem; border-bottom: 1px solid #ddd; }
+section:nth-child(even) { background: #f8f6f2; }
+.section-tag { font-family: Arial, sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8b1a1a; margin-bottom: 0.6rem; }
+h2 { font-size: 2rem; font-weight: normal; margin-bottom: 1.5rem; line-height: 1.2; }
+h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+p { margin-bottom: 1rem; max-width: 70ch; }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 1rem; }
+.trilemma { background: #1a1a1a; color: #f0ebe0; padding: 2rem; }
+.trilemma p { color: #ccc; max-width: none; font-style: italic; margin-bottom: 1.5rem; }
+.trilemma ol { padding-left: 1.2rem; color: #aaa; }
+.trilemma ol li { margin-bottom: 0.5rem; }
+.trilemma ol li strong { color: #f0ebe0; }
+.tracks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+.track { border: 1px solid #ddd; padding: 1.5rem; background: #fff; }
+.track-label { font-family: Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: #8b1a1a; margin-bottom: 0.5rem; }
+.track h3 { font-size: 1.05rem; margin-bottom: 0.8rem; }
+.track ul { padding-left: 1.2rem; }
+.track ul li { font-size: 0.9rem; color: #444; margin-bottom: 0.3rem; }
+.crosscut { margin-top: 2rem; padding: 1.2rem 1.5rem; border-left: 3px solid #8b1a1a; background: #fff; }
+.session-heading { font-family: Arial, sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: #666; margin: 2rem 0 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ddd; }
+table.schedule { width: 100%; border-collapse: collapse; max-width: 800px; }
+table.schedule tr { border-bottom: 1px solid #eee; }
+table.schedule tr.break-row { background: #f8f6f2; }
+table.schedule td { padding: 0.8rem 0.6rem; vertical-align: top; }
+table.schedule td.time { font-family: Arial, sans-serif; font-size: 0.78rem; color: #888; white-space: nowrap; width: 110px; }
+table.schedule td.type { font-family: Arial, sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; width: 100px; }
+.type-talk { color: #8b1a1a; }
+.type-break { color: #888; }
+.type-session { color: #5a6e2a; }
+.type-panel { color: #2a4e6e; }
+table.schedule td.content .title { font-weight: bold; font-size: 0.95rem; margin-bottom: 0.2rem; }
+table.schedule td.content .detail { font-size: 0.85rem; color: #555; }
+#people { background: #1a1a1a; color: #f0ebe0; }
+#people .section-tag { color: #c87060; }
+#people h2 { color: #f0ebe0; }
+.people-group-label { font-family: Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: #666; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #333; }
+.people-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #333; }
+.person { background: #1a1a1a; padding: 1.3rem; }
+.person .name { font-size: 1rem; font-weight: bold; margin-bottom: 0.3rem; color: #f0ebe0; }
+.person .role { font-size: 0.82rem; color: #999; line-height: 1.4; margin-bottom: 0.4rem; }
+.person .affil { font-family: Arial, sans-serif; font-size: 0.7rem; color: #c87060; }
+.sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 1rem; }
+.sub-types { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+.sub-type { border: 1px solid #ddd; padding: 1.2rem; background: #fff; }
+.sub-type h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+.sub-type p { font-size: 0.88rem; color: #555; margin: 0; max-width: none; }
+.format-box { margin-top: 1.2rem; padding: 1.2rem 1.5rem; background: #1a1a1a; color: #ccc; }
+.format-box strong { color: #f0ebe0; }
+.format-label { font-family: Arial, sans-serif; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8b1a1a; margin-bottom: 0.4rem; }
+.timeline { margin-top: 0.5rem; }
+.tl-row { display: grid; grid-template-columns: 130px 1fr; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid #ddd; font-size: 0.9rem; }
+.tl-row .date { font-family: Arial, sans-serif; font-size: 0.78rem; color: #888; }
+.tl-row.hl .date { color: #8b1a1a; }
+.tl-row.hl .event { font-weight: bold; }
+.contact-box { margin-top: 2rem; padding: 1.2rem 1.5rem; border-left: 3px solid #8b1a1a; background: #f8f6f2; font-size: 0.88rem; color: #555; }
+footer { background: #111; color: #666; padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif; font-size: 0.78rem; }
+footer .brand { color: #aaa; font-size: 1rem; font-family: Georgia, serif; }
+@media (max-width: 800px) {
+  #hero { padding: 3rem 1.5rem; } #hero h1 { font-size: 2.2rem; }
+  section { padding: 3rem 1.5rem; }
+  .about-grid, .tracks-grid, .sub-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .people-grid { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
+}
+@media (max-width: 500px) {
+  .people-grid { grid-template-columns: 1fr; }
+  #topnav ul { display: none; }
+}
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <span class="brand">Augmented Democracies &middot; IJCAI-ECAI 2026</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#tracks">Tracks</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#people">Organizers</a></li>
+    <li><a href="#submissions">Submit</a></li>
+  </ul>
+</nav>
+
+<div id="hero">
+  <div class="label">IJCAI-ECAI 2026 Workshop &middot; Bremen, Germany &middot; 17 August 2026</div>
+  <h1>Augmented <em>Democracies</em></h1>
+  <p>AI for Civic Engagement and Democratic Decision-Making &mdash; a full-day workshop bringing together researchers from AI, HCI, political science, and digital democracy practice.</p>
+  <div class="meta">
+    <span>Full-Day Workshop</span>
+    <span>40&ndash;50 Participants</span>
+    <span>4 Tracks</span>
+    <span>Bremen, Germany</span>
+  </div>
+  <button onclick="document.getElementById('submissions').scrollIntoView({behavior:'smooth'})">Submit a Paper</button>
+  <span class="scroll-link" onclick="document.getElementById('schedule').scrollIntoView({behavior:'smooth'})">View Schedule &rarr;</span>
+</div>
+
+<section id="about">
+  <div class="section-tag">About the Workshop</div>
+  <h2>Designing AI for Democracy</h2>
+  <div class="about-grid">
+    <div>
+      <p>Democratic political regimes face unprecedented challenges from declining public trust, polarization, disinformation, and external competition from authoritarian systems deploying AI for centralized control.</p>
+      <p>Simultaneously, recent advances in artificial intelligence &mdash; especially large language models &mdash; have created new technical capabilities to support democratic deliberation, civic engagement, and inclusive political participation at scale.</p>
+      <p>This workshop brings together researchers from AI, HCI, political science, computational social science, and digital democracy practice to critically assess the state of the art and collaboratively design next-generation AI systems that strengthen democratic decision-making by the people and for the people.</p>
+    </div>
+    <div class="trilemma">
+      <p>A core challenge in democratic theory is the <strong>deliberative trilemma</strong>: achieving simultaneously broad participation, high-quality deliberation, and political equality is extremely difficult.</p>
+      <ol>
+        <li><strong>Scalability</strong> &mdash; Broad participation across diverse populations</li>
+        <li><strong>Deliberation Quality</strong> &mdash; Reasoned, informed exchange of arguments</li>
+        <li><strong>Political Equality</strong> &mdash; Equal voice and influence for all participants</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="tracks">
+  <div class="section-tag">Call for Contributions</div>
+  <h2>Four Research Tracks</h2>
+  <p>We invite long papers (up to 7 pages plus references), extended abstracts (up to 2 pages plus references), position papers, and system demonstrations on the following topics.</p>
+  <div class="tracks-grid">
+    <div class="track">
+      <div class="track-label">Track A</div>
+      <h3>AI-Mediated Deliberation &amp; Consensus Formation</h3>
+      <ul>
+        <li>AI-mediated deliberation and consensus or meta-consensus formation</li>
+        <li>LLM-based facilitation, summarization, and argument coaching</li>
+        <li>Large-scale deliberation platforms and clustering approaches</li>
+        <li>Evaluation metrics for deliberative quality, equality, and legitimacy</li>
+      </ul>
+    </div>
+    <div class="track">
+      <div class="track-label">Track B</div>
+      <h3>AI for Representation &amp; Inclusion</h3>
+      <ul>
+        <li>Multilingual and cross-cultural deliberation in European and global settings</li>
+        <li>AI solutions for underrepresented groups (migrants, asylum seekers, lower-educated populations)</li>
+        <li>Accessibility tools for time-constrained citizens and literacy barriers</li>
+        <li>Minority protection and contestability mechanisms</li>
+      </ul>
+    </div>
+    <div class="track">
+      <div class="track-label">Track C</div>
+      <h3>Real-World Deliberation Platforms &amp; Deployment</h3>
+      <ul>
+        <li>Institutional deployment in citizens' assemblies and participatory budgeting</li>
+        <li>Case studies from Decidim, Consul, and similar civic tech tools</li>
+        <li>Integration with existing democratic institutions and governance structures</li>
+        <li>Lessons learned from practical implementations</li>
+      </ul>
+    </div>
+    <div class="track">
+      <div class="track-label">Track D</div>
+      <h3>Democratic AI Governance &amp; Alignment</h3>
+      <ul>
+        <li>Democracy-by-design and participatory AI alignment</li>
+        <li>Collective Constitutional AI and public input into AI development</li>
+        <li>Civic education and AI literacy for democratic participation</li>
+        <li>Trust, legitimacy, and transparency in AI-augmented democratic processes</li>
+      </ul>
+    </div>
+  </div>
+  <div class="crosscut">
+    <strong>Cross-cutting concerns:</strong> Risks including manipulation, strategic behavior, misinformation, trust erosion, and the &ldquo;AI penalty&rdquo; in civic contexts; political behavior and polarization; evaluation frameworks and empirical validation; ethical considerations and value alignment.
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="section-tag">Programme</div>
+  <h2>Workshop Schedule</h2>
+  <p>17 August 2026, Bremen, Germany &mdash; Full-day workshop.</p>
+
+  <div class="session-heading">Morning Session &mdash; Problem Framing and State of the Art</div>
+  <table class="schedule">
+    <tr>
+      <td class="time">09:00&ndash;09:15</td>
+      <td class="type type-session">Opening</td>
+      <td class="content"><div class="title">Opening Remarks and Workshop Framing</div><div class="detail">Introduction to the deliberative trilemma &middot; Overview of objectives and structure</div></td>
+    </tr>
+    <tr>
+      <td class="time">09:15&ndash;09:45</td>
+      <td class="type type-talk">Invited Talk</td>
+      <td class="content"><div class="title">AI Mediation in Democratic Deliberation</div><div class="detail">Michael H. Tessler &middot; Google DeepMind, London &middot; AI-mediated synthesis and common ground formation</div></td>
+    </tr>
+    <tr>
+      <td class="time">09:45&ndash;10:15</td>
+      <td class="type type-talk">Invited Talk</td>
+      <td class="content"><div class="title">Participatory AI Alignment</div><div class="detail">Davide Grossi &middot; University of Groningen &middot; Collective Constitutional AI and democracy-by-design</div></td>
+    </tr>
+    <tr>
+      <td class="time">10:15&ndash;10:45</td>
+      <td class="type type-talk">Invited Talk</td>
+      <td class="content"><div class="title">Hybrid AI to Support Democratic Debate</div><div class="detail">Monica Palmirani &middot; Full Professor of Legal Informatics &middot; University of Bologna</div></td>
+    </tr>
+    <tr class="break-row">
+      <td class="time">10:45&ndash;11:15</td>
+      <td class="type type-break">Break</td>
+      <td class="content"><div class="title">Coffee Break</div></td>
+    </tr>
+    <tr>
+      <td class="time">11:15&ndash;11:45</td>
+      <td class="type type-talk">Invited Talk</td>
+      <td class="content"><div class="title">Deliberation Quality and Platform Design</div><div class="detail">Horacio Saggion &middot; University Pompeu Fabra &middot; Measuring and ensuring deliberative quality in online platforms</div></td>
+    </tr>
+    <tr>
+      <td class="time">11:45&ndash;12:15</td>
+      <td class="type type-session">Lightning Talks</td>
+      <td class="content"><div class="title">State of the Art: Paper Presentations</div><div class="detail">5-minute presentations of accepted papers and demos &middot; Existing systems, empirical findings, and current challenges</div></td>
+    </tr>
+    <tr class="break-row">
+      <td class="time">12:15&ndash;13:30</td>
+      <td class="type type-break">Break</td>
+      <td class="content"><div class="title">Lunch Break</div><div class="detail">Poster session and demo stations during the break</div></td>
+    </tr>
+  </table>
+
+  <div class="session-heading">Afternoon Session &mdash; Co-Design and Synthesis</div>
+  <table class="schedule">
+    <tr>
+      <td class="time">13:30&ndash;15:00</td>
+      <td class="type type-session">Breakout Studios</td>
+      <td class="content">
+        <div class="title">Parallel Design Studios (90 min)</div>
+        <div class="detail">
+          <strong>Studio A</strong> &middot; Consensus &amp; Minority Protection<br>
+          <strong>Studio B</strong> &middot; Deliberation Quality &amp; Truthfulness<br>
+          <strong>Studio C</strong> &middot; Inclusion &amp; Multilingual Participation<br>
+          <strong>Studio D</strong> &middot; Democracy-by-Design &amp; AI Alignment
+        </div>
+      </td>
+    </tr>
+    <tr class="break-row">
+      <td class="time">15:00&ndash;15:30</td>
+      <td class="type type-break">Break</td>
+      <td class="content"><div class="title">Coffee Break</div></td>
+    </tr>
+    <tr>
+      <td class="time">15:30&ndash;16:30</td>
+      <td class="type type-session">Plenary</td>
+      <td class="content"><div class="title">Report-Back and Synthesis</div><div class="detail">10-minute presentations from each studio &middot; Identification of cross-cutting themes &middot; Consolidation of design principles</div></td>
+    </tr>
+    <tr>
+      <td class="time">16:30&ndash;17:15</td>
+      <td class="type type-panel">Panel</td>
+      <td class="content"><div class="title">From Research to Impact</div><div class="detail">Moderator: Hilke Brockmann &middot; Real-world deployment &middot; Institutional adoption &middot; Policy implications</div></td>
+    </tr>
+    <tr>
+      <td class="time">17:15&ndash;17:45</td>
+      <td class="type type-session">Networking</td>
+      <td class="content"><div class="title">Consortium Formation</div><div class="detail">Future collaborations &middot; EU/national funding opportunities &middot; Working group sign-ups</div></td>
+    </tr>
+    <tr>
+      <td class="time">17:45&ndash;18:00</td>
+      <td class="type type-session">Closing</td>
+      <td class="content"><div class="title">Closing Remarks and Next Steps</div></td>
+    </tr>
+  </table>
+</section>
+
+<section id="people">
+  <div class="section-tag">People</div>
+  <h2>Organizers &amp; Committee</h2>
+
+  <div class="people-group-label">Organizing Committee</div>
+  <div class="people-grid">
+    <div class="person"><div class="name">Hilke Brockmann</div><div class="role">Professor of Sociology &middot; Primary Contact</div><div class="affil">Constructor University Bremen, Germany</div></div>
+    <div class="person"><div class="name">Horacio Saggion</div><div class="role">Professor of Computer Science &amp; AI &middot; Head of TALN Group</div><div class="affil">University Pompeu Fabra, Spain</div></div>
+    <div class="person"><div class="name">Ivan Yamshchikov</div><div class="role">Research Professor &middot; Semantic Data Processing &amp; Cognitive Computing</div><div class="affil">THWS W&uuml;rzburg-Schweinfurt, Germany</div></div>
+  </div>
+
+  <div class="people-group-label">Scientific Committee</div>
+  <div class="people-grid">
+    <div class="person"><div class="name">Angelica Henestrosa</div><div class="role">Post-Doc, Psychology &amp; HCI</div><div class="affil">THWS, Germany</div></div>
+    <div class="person"><div class="name">Felix Gaisbauer</div><div class="role">Postdoctoral Researcher</div><div class="affil">Weizenbaum Institute, Berlin</div></div>
+    <div class="person"><div class="name">Davide Grossi</div><div class="role">Associate Professor &middot; Collective Decision Making &amp; Computation</div><div class="affil">University of Groningen, Netherlands</div></div>
+    <div class="person"><div class="name">Jan Lorenz</div><div class="role">Assistant Professor &middot; Social Data Science</div><div class="affil">Constructor University Bremen, Germany</div></div>
+    <div class="person"><div class="name">Jos van Leeuwen</div><div class="role">Professor of Civic Technology</div><div class="affil">The Hague University of Applied Sciences, Netherlands</div></div>
+    <div class="person"><div class="name">David S. Rosenblum</div><div class="role">Professor of Computer Science</div><div class="affil">George Mason University, USA</div></div>
+    <div class="person"><div class="name">Jakob Suchan</div><div class="role">Assistant Professor of Computer Science</div><div class="affil">Constructor University Bremen, Germany</div></div>
+    <div class="person"><div class="name">Kalypso Nicola&iuml;dis</div><div class="role">Professor of Global Affairs</div><div class="affil">School of Transnational Governance, EUI, Italy</div></div>
+    <div class="person"><div class="name">Monica Palmirani</div><div class="role">Full Professor of Legal Informatics &amp; ICT Law</div><div class="affil">University of Bologna, Italy</div></div>
+  </div>
+</section>
+
+<section id="submissions">
+  <div class="section-tag">Submissions</div>
+  <h2>How to Contribute</h2>
+  <div class="sub-grid">
+    <div>
+      <p>We welcome contributions from researchers and practitioners across AI, computational social science, political science, HCI, civic technology, and related fields.</p>
+      <div class="sub-types">
+        <div class="sub-type">
+          <h4>Long Papers</h4>
+          <p>Up to 7 pages plus references &middot; Original research, empirical findings, or system descriptions</p>
+        </div>
+        <div class="sub-type">
+          <h4>Extended Abstracts</h4>
+          <p>Up to 2 pages plus references &middot; Work in progress, position statements, or preliminary results</p>
+        </div>
+      </div>
+      <div class="format-box">
+        <div class="format-label">Format</div>
+        <p style="margin:0; font-size:0.88rem; max-width:none;">All submissions must use the <strong>IJCAI-ECAI 2026 conference paper template</strong>. Page limits are exclusive of references. Submissions should be made in PDF format.</p>
+      </div>
+    </div>
+    <div>
+      <h3>Important Dates</h3>
+      <div class="timeline">
+        <div class="tl-row"><span class="date">15 Mar 2026</span><span class="event">Call for papers issued</span></div>
+        <div class="tl-row hl"><span class="date">1 Jun 2026</span><span class="event">Paper submission deadline</span></div>
+        <div class="tl-row"><span class="date">25 Jun 2026</span><span class="event">Notification to authors</span></div>
+        <div class="tl-row"><span class="date">10 Jul 2026</span><span class="event">Camera-ready deadline</span></div>
+        <div class="tl-row"><span class="date">15 Jul 2026</span><span class="event">Preliminary programme published</span></div>
+        <div class="tl-row hl"><span class="date">17 Aug 2026</span><span class="event">Workshop at IJCAI-ECAI 2026, Bremen</span></div>
+      </div>
+      <div class="contact-box">
+        <p style="margin:0; max-width:none;">Submissions will be reviewed by the programme committee. Accepted papers must register for IJCAI-ECAI 2026.<br><br>
+      </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="brand">Augmented Democracies</div>
+    <div style="margin-top:0.3rem;">IJCAI-ECAI 2026 Workshop &middot; 17 August 2026 &middot; Bremen, Germany</div>
+  </div>
+
+</footer>
+
+</body>
+</html>
